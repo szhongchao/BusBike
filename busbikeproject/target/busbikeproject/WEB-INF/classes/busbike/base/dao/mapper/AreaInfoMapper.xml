@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.AreaInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.AreaInfo" >
+    <id column="AREA_ID" property="areaId" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="ZONE_ID" property="zoneId" jdbcType="VARCHAR" />
+    <result column="CENTER_LAT" property="centerLat" jdbcType="VARCHAR" />
+    <result column="CENTER_LNG" property="centerLng" jdbcType="VARCHAR" />
+    <result column="ISVISBLE" property="isvisble" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AREA_ID, AREA_NAME, ZONE_ID, CENTER_LAT, CENTER_LNG, ISVISBLE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.base.pojo.po.AreaInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from AREA_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from AREA_INFO
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from AREA_INFO
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.base.pojo.po.AreaInfoExample" >
+    delete from AREA_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.base.pojo.po.AreaInfo" >
+    insert into AREA_INFO (AREA_ID, AREA_NAME, ZONE_ID, 
+      CENTER_LAT, CENTER_LNG, ISVISBLE
+      )
+    values (#{areaId,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{zoneId,jdbcType=VARCHAR}, 
+      #{centerLat,jdbcType=VARCHAR}, #{centerLng,jdbcType=VARCHAR}, #{isvisble,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.base.pojo.po.AreaInfo" >
+    insert into AREA_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="zoneId != null" >
+        ZONE_ID,
+      </if>
+      <if test="centerLat != null" >
+        CENTER_LAT,
+      </if>
+      <if test="centerLng != null" >
+        CENTER_LNG,
+      </if>
+      <if test="isvisble != null" >
+        ISVISBLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneId != null" >
+        #{zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLat != null" >
+        #{centerLat,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLng != null" >
+        #{centerLng,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisble != null" >
+        #{isvisble,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.base.pojo.po.AreaInfoExample" resultType="java.lang.Integer" >
+    select count(*) from AREA_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update AREA_INFO
+    <set >
+      <if test="record.areaId != null" >
+        AREA_ID = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaName != null" >
+        AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zoneId != null" >
+        ZONE_ID = #{record.zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerLat != null" >
+        CENTER_LAT = #{record.centerLat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerLng != null" >
+        CENTER_LNG = #{record.centerLng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isvisble != null" >
+        ISVISBLE = #{record.isvisble,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update AREA_INFO
+    set AREA_ID = #{record.areaId,jdbcType=VARCHAR},
+      AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      ZONE_ID = #{record.zoneId,jdbcType=VARCHAR},
+      CENTER_LAT = #{record.centerLat,jdbcType=VARCHAR},
+      CENTER_LNG = #{record.centerLng,jdbcType=VARCHAR},
+      ISVISBLE = #{record.isvisble,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.base.pojo.po.AreaInfo" >
+    update AREA_INFO
+    <set >
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneId != null" >
+        ZONE_ID = #{zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLat != null" >
+        CENTER_LAT = #{centerLat,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLng != null" >
+        CENTER_LNG = #{centerLng,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisble != null" >
+        ISVISBLE = #{isvisble,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.base.pojo.po.AreaInfo" >
+    update AREA_INFO
+    set AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      ZONE_ID = #{zoneId,jdbcType=VARCHAR},
+      CENTER_LAT = #{centerLat,jdbcType=VARCHAR},
+      CENTER_LNG = #{centerLng,jdbcType=VARCHAR},
+      ISVISBLE = #{isvisble,jdbcType=VARCHAR}
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </update>
+</mapper>

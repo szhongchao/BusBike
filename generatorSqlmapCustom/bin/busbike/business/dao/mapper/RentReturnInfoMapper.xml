@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.business.dao.mapper.RentReturnInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.RentReturnInfo" >
+    <result column="HOST_SERI" property="hostSeri" jdbcType="VARCHAR" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="VARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="VARCHAR" />
+    <result column="rent_date_time" property="rentDateTime" jdbcType="VARCHAR" />
+    <result column="RENT_NETID" property="rentNetid" jdbcType="VARCHAR" />
+    <result column="RENT_NUM" property="rentNum" jdbcType="VARCHAR" />
+    <result column="CAR_NUM" property="carNum" jdbcType="VARCHAR" />
+    <result column="INST_CARD" property="instCard" jdbcType="VARCHAR" />
+    <result column="RETURN_DATE" property="returnDate" jdbcType="VARCHAR" />
+    <result column="RETURN_TIME" property="returnTime" jdbcType="VARCHAR" />
+    <result column="return_date_time" property="returnDateTime" jdbcType="VARCHAR" />
+    <result column="RETURN_NETID" property="returnNetid" jdbcType="VARCHAR" />
+    <result column="PARK_NUM" property="parkNum" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="INTEGER" />
+    <result column="TRAN_FLAG" property="tranFlag" jdbcType="CHAR" />
+    <result column="RENT_TYPE" property="rentType" jdbcType="CHAR" />
+    <result column="CH_TYPE" property="chType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    HOST_SERI, TRAN_DATE, TRAN_TIME, rent_date_time, RENT_NETID, RENT_NUM, CAR_NUM, INST_CARD, 
+    RETURN_DATE, RETURN_TIME, return_date_time, RETURN_NETID, PARK_NUM, CARD_TYPE, TRAN_FLAG, 
+    RENT_TYPE, CH_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.business.pojo.po.RentReturnInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_return_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="busbike.business.pojo.po.RentReturnInfoExample" >
+    delete from rent_return_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.business.pojo.po.RentReturnInfo" >
+    insert into rent_return_info (HOST_SERI, TRAN_DATE, TRAN_TIME, 
+      rent_date_time, RENT_NETID, RENT_NUM, 
+      CAR_NUM, INST_CARD, RETURN_DATE, 
+      RETURN_TIME, return_date_time, RETURN_NETID, 
+      PARK_NUM, CARD_TYPE, TRAN_FLAG, 
+      RENT_TYPE, CH_TYPE)
+    values (#{hostSeri,jdbcType=VARCHAR}, #{tranDate,jdbcType=VARCHAR}, #{tranTime,jdbcType=VARCHAR}, 
+      #{rentDateTime,jdbcType=VARCHAR}, #{rentNetid,jdbcType=VARCHAR}, #{rentNum,jdbcType=VARCHAR}, 
+      #{carNum,jdbcType=VARCHAR}, #{instCard,jdbcType=VARCHAR}, #{returnDate,jdbcType=VARCHAR}, 
+      #{returnTime,jdbcType=VARCHAR}, #{returnDateTime,jdbcType=VARCHAR}, #{returnNetid,jdbcType=VARCHAR}, 
+      #{parkNum,jdbcType=VARCHAR}, #{cardType,jdbcType=INTEGER}, #{tranFlag,jdbcType=CHAR}, 
+      #{rentType,jdbcType=CHAR}, #{chType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.business.pojo.po.RentReturnInfo" >
+    insert into rent_return_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hostSeri != null" >
+        HOST_SERI,
+      </if>
+      <if test="tranDate != null" >
+        TRAN_DATE,
+      </if>
+      <if test="tranTime != null" >
+        TRAN_TIME,
+      </if>
+      <if test="rentDateTime != null" >
+        rent_date_time,
+      </if>
+      <if test="rentNetid != null" >
+        RENT_NETID,
+      </if>
+      <if test="rentNum != null" >
+        RENT_NUM,
+      </if>
+      <if test="carNum != null" >
+        CAR_NUM,
+      </if>
+      <if test="instCard != null" >
+        INST_CARD,
+      </if>
+      <if test="returnDate != null" >
+        RETURN_DATE,
+      </if>
+      <if test="returnTime != null" >
+        RETURN_TIME,
+      </if>
+      <if test="returnDateTime != null" >
+        return_date_time,
+      </if>
+      <if test="returnNetid != null" >
+        RETURN_NETID,
+      </if>
+      <if test="parkNum != null" >
+        PARK_NUM,
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE,
+      </if>
+      <if test="tranFlag != null" >
+        TRAN_FLAG,
+      </if>
+      <if test="rentType != null" >
+        RENT_TYPE,
+      </if>
+      <if test="chType != null" >
+        CH_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hostSeri != null" >
+        #{hostSeri,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDate != null" >
+        #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tranTime != null" >
+        #{tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rentDateTime != null" >
+        #{rentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetid != null" >
+        #{rentNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNum != null" >
+        #{rentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="instCard != null" >
+        #{instCard,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDateTime != null" >
+        #{returnDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNetid != null" >
+        #{returnNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="parkNum != null" >
+        #{parkNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="tranFlag != null" >
+        #{tranFlag,jdbcType=CHAR},
+      </if>
+      <if test="rentType != null" >
+        #{rentType,jdbcType=CHAR},
+      </if>
+      <if test="chType != null" >
+        #{chType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.business.pojo.po.RentReturnInfoExample" resultType="java.lang.Integer" >
+    select count(*) from rent_return_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rent_return_info
+    <set >
+      <if test="record.hostSeri != null" >
+        HOST_SERI = #{record.hostSeri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranDate != null" >
+        TRAN_DATE = #{record.tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranTime != null" >
+        TRAN_TIME = #{record.tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentDateTime != null" >
+        rent_date_time = #{record.rentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNetid != null" >
+        RENT_NETID = #{record.rentNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNum != null" >
+        RENT_NUM = #{record.rentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNum != null" >
+        CAR_NUM = #{record.carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instCard != null" >
+        INST_CARD = #{record.instCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnDate != null" >
+        RETURN_DATE = #{record.returnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnTime != null" >
+        RETURN_TIME = #{record.returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnDateTime != null" >
+        return_date_time = #{record.returnDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnNetid != null" >
+        RETURN_NETID = #{record.returnNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkNum != null" >
+        PARK_NUM = #{record.parkNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        CARD_TYPE = #{record.cardType,jdbcType=INTEGER},
+      </if>
+      <if test="record.tranFlag != null" >
+        TRAN_FLAG = #{record.tranFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.rentType != null" >
+        RENT_TYPE = #{record.rentType,jdbcType=CHAR},
+      </if>
+      <if test="record.chType != null" >
+        CH_TYPE = #{record.chType,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rent_return_info
+    set HOST_SERI = #{record.hostSeri,jdbcType=VARCHAR},
+      TRAN_DATE = #{record.tranDate,jdbcType=VARCHAR},
+      TRAN_TIME = #{record.tranTime,jdbcType=VARCHAR},
+      rent_date_time = #{record.rentDateTime,jdbcType=VARCHAR},
+      RENT_NETID = #{record.rentNetid,jdbcType=VARCHAR},
+      RENT_NUM = #{record.rentNum,jdbcType=VARCHAR},
+      CAR_NUM = #{record.carNum,jdbcType=VARCHAR},
+      INST_CARD = #{record.instCard,jdbcType=VARCHAR},
+      RETURN_DATE = #{record.returnDate,jdbcType=VARCHAR},
+      RETURN_TIME = #{record.returnTime,jdbcType=VARCHAR},
+      return_date_time = #{record.returnDateTime,jdbcType=VARCHAR},
+      RETURN_NETID = #{record.returnNetid,jdbcType=VARCHAR},
+      PARK_NUM = #{record.parkNum,jdbcType=VARCHAR},
+      CARD_TYPE = #{record.cardType,jdbcType=INTEGER},
+      TRAN_FLAG = #{record.tranFlag,jdbcType=CHAR},
+      RENT_TYPE = #{record.rentType,jdbcType=CHAR},
+      CH_TYPE = #{record.chType,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

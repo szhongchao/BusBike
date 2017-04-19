@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.DictInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.vo.DictInfoCustom" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="DICT_CODE" property="dictCode" jdbcType="VARCHAR" />
+    <result column="TYPE_CODE" property="typeCode" jdbcType="VARCHAR" />
+    <result column="INFO" property="info" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="DICT_SORT" property="dictSort" jdbcType="VARCHAR" />
+    <result column="ISENABLE" property="isenable" jdbcType="VARCHAR" />
+    <result column="VALUE_TYPE" property="valueType" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectInfoByDictCode" resultType="java.lang.String" parameterType="java.lang.String" >
+  
+    select info from dict_info where dict_code = #{dictCode,jdbcType=VARCHAR}
+    
+  </select>
+</mapper>

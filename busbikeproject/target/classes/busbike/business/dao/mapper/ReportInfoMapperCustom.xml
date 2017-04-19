@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.business.dao.mapper.ReportInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.ReportInfo" >
+    <id column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="no_maintain_case" property="noMaintainCase" jdbcType="VARCHAR" />
+    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
+    <result column="chip_num" property="chipNum" jdbcType="VARCHAR" />
+    <result column="car_addr" property="carAddr" jdbcType="VARCHAR" />
+    <result column="fault_type_num" property="faultTypeNum" jdbcType="VARCHAR" />
+    <result column="fault_type" property="faultType" jdbcType="VARCHAR" />
+    <result column="fault_name" property="faultName" jdbcType="VARCHAR" />
+    <result column="car_fault_desc" property="carFaultDesc" jdbcType="VARCHAR" />
+    <result column="is_multi_fault" property="isMultiFault" jdbcType="VARCHAR" />
+    <result column="is_lock" property="isLock" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="latest_rent_date_time" property="latestRentDateTime" jdbcType="VARCHAR" />
+    <result column="report_date_time" property="reportDateTime" jdbcType="VARCHAR" />
+    <result column="zone_id" property="zoneId" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="rent_net_id" property="rentNetId" jdbcType="VARCHAR" />
+    <result column="rent_num" property="rentNum" jdbcType="VARCHAR" />
+    <result column="to_check_emp_id" property="toCheckEmpId" jdbcType="VARCHAR" />
+    <result column="rent_net_name" property="rentNetName" jdbcType="VARCHAR" />
+    <result column="rent_net_addr" property="rentNetAddr" jdbcType="VARCHAR" />
+    <result column="report_source" property="reportSource" jdbcType="VARCHAR" />
+    <result column="report_name" property="reportName" jdbcType="VARCHAR" />
+    <result column="report_emp_id" property="reportEmpId" jdbcType="VARCHAR" />
+    <result column="repair_date_time" property="repairDateTime" jdbcType="VARCHAR" />
+    <result column="fault_num" property="faultNum" jdbcType="VARCHAR" />
+    <result column="report_b_p1" property="reportBP1" jdbcType="VARCHAR" />
+    <result column="report_b_p2" property="reportBP2" jdbcType="VARCHAR" />
+    <result column="report_b_p3" property="reportBP3" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_report_where">
+		<if test="reportInfo!=null">
+			<if test="reportInfo.reportEmpId!=null and reportInfo.reportEmpId!=''">
+				and REPORT_EMP_ID = #{reportInfo.reportEmpId}
+			</if>
+			<if test="reportInfo.rentNetId!=null and reportInfo.rentNetId!=''">
+				and RENT_NET_ID = #{reportInfo.rentNetId}
+			</if>
+			<if test="reportInfo.carAddr!=null and reportInfo.carAddr!=''">
+				and CAR_ADDR like '%'||#{reportInfo.carAddr}||'%'
+			</if>
+			<if test="reportInfo.reportDateTime!=null and reportInfo.reportDateTime!=''">
+				and REPAIR_DATE_TIME like '%'||#{reportInfo.reportDateTime}||'%'
+			</if>
+			<if test="reportInfo.state!=null and reportInfo.state!=''">
+				and STATE = #{reportInfo.state}
+			</if>
+			<if test="reportInfo.reportSource!=null and reportInfo.reportSource!=''">
+				and REPORT_SOURCE = #{reportInfo.reportSource}
+			</if>
+			<if test="reportInfo.rentNum!=null and reportInfo.rentNum!=''">
+				and RENT_NUM = #{reportInfo.rentNum}
+			</if>
+			<if test="reportInfo.faultTypeNum!=null and reportInfo.faultTypeNum!=''">
+				and fault_Type_num = #{reportInfo.faultTypeNum}
+			</if>
+		</if>
+	</sql>
+
+	<!-- 查询列表的总记录数 -->
+	 <select id="countReportInfo" parameterType="busbike.business.pojo.vo.ReportQueryVo"
+	   resultType="int">
+	    select count(1) from report_info
+		 <where>
+			<include refid="query_report_where" />
+		</where>
+	</select>
+	<!-- 按照分页查询列表 -->
+	<select id="selectReportInfoList" parameterType="busbike.business.pojo.vo.ReportQueryVo"
+		resultMap="BaseResultMap">
+		
+		SELECT SQL_CALC_FOUND_ROWS * FROM report_info 
+		
+		<where>
+			<include refid="query_report_where" />
+		</where> 		
+		<!-- 分页查询 -->
+		 <if test="pageQuery!=null">
+			
+			LIMIT ${pageQuery.PageQuery_start} ,${pageQuery.PageQuery_end} ;
+		</if> 		
+	</select>
+	
+	<!-- 根据报修编号查询报修记录-->
+	<select id="selectLatestByReportId" parameterType="String"
+		resultMap="BaseResultMap">
+		
+		<!-- select * from report_info -->
+		select * from report_info where report_id = #{_parameter}  LIMIT 1
+		
+	</select>
+	
+	<!-- 更新审核信息 -->
+	<update id="updateReport" parameterType="busbike.business.pojo.po.ReportInfo" >
+    update REPORT_INFO
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REPORT_ID = #{reportId,jdbcType=VARCHAR}
+  </update>
+  
+    
+</mapper>

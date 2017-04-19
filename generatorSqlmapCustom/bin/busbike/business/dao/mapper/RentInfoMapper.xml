@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.business.dao.mapper.RentInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.RentInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rent_id" property="rentId" jdbcType="VARCHAR" />
+    <result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+    <result column="road" property="road" jdbcType="VARCHAR" />
+    <result column="rent_name" property="rentName" jdbcType="VARCHAR" />
+    <result column="rent_position" property="rentPosition" jdbcType="VARCHAR" />
+    <result column="max_number" property="maxNumber" jdbcType="INTEGER" />
+    <result column="lat" property="lat" jdbcType="VARCHAR" />
+    <result column="lng" property="lng" jdbcType="VARCHAR" />
+    <result column="left_or_right" property="leftOrRight" jdbcType="VARCHAR" />
+    <result column="rent_rank" property="rentRank" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="top_limit" property="topLimit" jdbcType="VARCHAR" />
+    <result column="low_limit" property="lowLimit" jdbcType="VARCHAR" />
+    <result column="oper_num" property="operNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, rent_id, zone_name, road, rent_name, rent_position, max_number, lat, lng, left_or_right, 
+    rent_rank, area_id, top_limit, low_limit, oper_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.business.pojo.po.RentInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rent_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rent_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.business.pojo.po.RentInfoExample" >
+    delete from rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.business.pojo.po.RentInfo" >
+    insert into rent_info (id, rent_id, zone_name, 
+      road, rent_name, rent_position, 
+      max_number, lat, lng, 
+      left_or_right, rent_rank, area_id, 
+      top_limit, low_limit, oper_num
+      )
+    values (#{id,jdbcType=INTEGER}, #{rentId,jdbcType=VARCHAR}, #{zoneName,jdbcType=VARCHAR}, 
+      #{road,jdbcType=VARCHAR}, #{rentName,jdbcType=VARCHAR}, #{rentPosition,jdbcType=VARCHAR}, 
+      #{maxNumber,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, 
+      #{leftOrRight,jdbcType=VARCHAR}, #{rentRank,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
+      #{topLimit,jdbcType=VARCHAR}, #{lowLimit,jdbcType=VARCHAR}, #{operNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.business.pojo.po.RentInfo" >
+    insert into rent_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rentId != null" >
+        rent_id,
+      </if>
+      <if test="zoneName != null" >
+        zone_name,
+      </if>
+      <if test="road != null" >
+        road,
+      </if>
+      <if test="rentName != null" >
+        rent_name,
+      </if>
+      <if test="rentPosition != null" >
+        rent_position,
+      </if>
+      <if test="maxNumber != null" >
+        max_number,
+      </if>
+      <if test="lat != null" >
+        lat,
+      </if>
+      <if test="lng != null" >
+        lng,
+      </if>
+      <if test="leftOrRight != null" >
+        left_or_right,
+      </if>
+      <if test="rentRank != null" >
+        rent_rank,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="topLimit != null" >
+        top_limit,
+      </if>
+      <if test="lowLimit != null" >
+        low_limit,
+      </if>
+      <if test="operNum != null" >
+        oper_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rentId != null" >
+        #{rentId,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="road != null" >
+        #{road,jdbcType=VARCHAR},
+      </if>
+      <if test="rentName != null" >
+        #{rentName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPosition != null" >
+        #{rentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="maxNumber != null" >
+        #{maxNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null" >
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="leftOrRight != null" >
+        #{leftOrRight,jdbcType=VARCHAR},
+      </if>
+      <if test="rentRank != null" >
+        #{rentRank,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="topLimit != null" >
+        #{topLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="lowLimit != null" >
+        #{lowLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="operNum != null" >
+        #{operNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.business.pojo.po.RentInfoExample" resultType="java.lang.Integer" >
+    select count(*) from rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rent_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentId != null" >
+        rent_id = #{record.rentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zoneName != null" >
+        zone_name = #{record.zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.road != null" >
+        road = #{record.road,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentName != null" >
+        rent_name = #{record.rentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentPosition != null" >
+        rent_position = #{record.rentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxNumber != null" >
+        max_number = #{record.maxNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.lat != null" >
+        lat = #{record.lat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lng != null" >
+        lng = #{record.lng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leftOrRight != null" >
+        left_or_right = #{record.leftOrRight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentRank != null" >
+        rent_rank = #{record.rentRank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.topLimit != null" >
+        top_limit = #{record.topLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lowLimit != null" >
+        low_limit = #{record.lowLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operNum != null" >
+        oper_num = #{record.operNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rent_info
+    set id = #{record.id,jdbcType=INTEGER},
+      rent_id = #{record.rentId,jdbcType=VARCHAR},
+      zone_name = #{record.zoneName,jdbcType=VARCHAR},
+      road = #{record.road,jdbcType=VARCHAR},
+      rent_name = #{record.rentName,jdbcType=VARCHAR},
+      rent_position = #{record.rentPosition,jdbcType=VARCHAR},
+      max_number = #{record.maxNumber,jdbcType=INTEGER},
+      lat = #{record.lat,jdbcType=VARCHAR},
+      lng = #{record.lng,jdbcType=VARCHAR},
+      left_or_right = #{record.leftOrRight,jdbcType=VARCHAR},
+      rent_rank = #{record.rentRank,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=INTEGER},
+      top_limit = #{record.topLimit,jdbcType=VARCHAR},
+      low_limit = #{record.lowLimit,jdbcType=VARCHAR},
+      oper_num = #{record.operNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.business.pojo.po.RentInfo" >
+    update rent_info
+    <set >
+      <if test="rentId != null" >
+        rent_id = #{rentId,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        zone_name = #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="road != null" >
+        road = #{road,jdbcType=VARCHAR},
+      </if>
+      <if test="rentName != null" >
+        rent_name = #{rentName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPosition != null" >
+        rent_position = #{rentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="maxNumber != null" >
+        max_number = #{maxNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lat != null" >
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null" >
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="leftOrRight != null" >
+        left_or_right = #{leftOrRight,jdbcType=VARCHAR},
+      </if>
+      <if test="rentRank != null" >
+        rent_rank = #{rentRank,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="topLimit != null" >
+        top_limit = #{topLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="lowLimit != null" >
+        low_limit = #{lowLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="operNum != null" >
+        oper_num = #{operNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.business.pojo.po.RentInfo" >
+    update rent_info
+    set rent_id = #{rentId,jdbcType=VARCHAR},
+      zone_name = #{zoneName,jdbcType=VARCHAR},
+      road = #{road,jdbcType=VARCHAR},
+      rent_name = #{rentName,jdbcType=VARCHAR},
+      rent_position = #{rentPosition,jdbcType=VARCHAR},
+      max_number = #{maxNumber,jdbcType=INTEGER},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      left_or_right = #{leftOrRight,jdbcType=VARCHAR},
+      rent_rank = #{rentRank,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=INTEGER},
+      top_limit = #{topLimit,jdbcType=VARCHAR},
+      low_limit = #{lowLimit,jdbcType=VARCHAR},
+      oper_num = #{operNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

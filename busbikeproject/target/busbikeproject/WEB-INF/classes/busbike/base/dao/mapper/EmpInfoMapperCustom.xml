@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.base.dao.mapper.EmpInfoMapperCustom">
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.EmpInfo" >
+    <id column="emp_id" property="empId" jdbcType="INTEGER" />
+    <result column="emp_type_id" property="empTypeId" jdbcType="VARCHAR" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="emp_password" property="empPassword" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="emp_type" property="empType" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="emp_address" property="empAddress" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="is_visible" property="isVisible" jdbcType="VARCHAR" />
+    <result column="security_level" property="securityLevel" jdbcType="VARCHAR" />
+    <result column="emp_class_id" property="empClassId" jdbcType="VARCHAR" />
+    <result column="emp_class_name" property="empClassName" jdbcType="VARCHAR" />
+    <result column="emp_group_id" property="empGroupId" jdbcType="VARCHAR" />
+    <result column="emp_group_name" property="empGroupName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_emp_where">
+		<if test="empInfo!=null">
+			<if test="empInfo.empTypeId!=null and empInfo.empTypeId!=''">
+				and EMP_TYPE_ID = #{empInfo.empTypeId}
+			</if>
+			<if test="empInfo.empName!=null and empInfo.empName!=''">
+				and EMP_NAME = #{empInfo.empName}
+			</if>
+			<if test="empInfo.empClassId!=null and empInfo.empClassId!=''">
+				and EMP_CLASS_ID = #{empInfo.empClassId}
+			</if>
+			<if test="empInfo.empGroupId!=null and empInfo.empGroupId!=''">
+				and EMP_GROUP_ID = #{empInfo.empGroupId}
+			</if>
+			
+		</if>
+	</sql>
+
+	<!-- 用户查询 -->
+	<select id="findEmpInfoList" parameterType="busbike.base.pojo.vo.EmpInfoQueryVo"
+		resultMap="BaseResultMap">
+		
+
+		select SQL_CALC_FOUND_ROWS * from emp_info 
+
+
+		<where>
+			<include refid="query_emp_where" />
+		</where> 
+		
+		<!-- 分页查询 -->
+		 <if test="pageQuery!=null">
+			LIMIT ${pageQuery.PageQuery_start} ,${pageQuery.PageQuery_end} ;
+		</if> 	
+		
+	</select>
+	
+	<!-- 查询列表的总记录数 -->
+	<select id="findEmpInfoCount" parameterType="busbike.base.pojo.vo.EmpInfoQueryVo"
+	resultType="int">
+	
+	 select count(*) from emp_info
+
+		 <where>
+			<include refid="query_emp_where" />
+		</where>
+	
+	</select>
+	
+	<!-- 根据报用户名查询信息-->
+	<select id="selectByEmpName" parameterType="String"
+		resultMap="BaseResultMap">
+		
+		<!-- select * from report_info -->
+		select * from emp_info where emp_name = #{_parameter}
+		
+	</select>
+
+</mapper>

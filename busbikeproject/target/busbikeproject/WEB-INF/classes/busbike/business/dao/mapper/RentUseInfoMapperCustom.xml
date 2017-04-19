@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.business.dao.mapper.RentUseInfoMapperCustom">
+     <resultMap id="BaseResultMap" type="busbike.business.pojo.po.RentUseInfo" >
+    <result column="HOST_SERI" property="hostSeri" jdbcType="VARCHAR" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="VARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="VARCHAR" />
+    <result column="RENT_DATE_TIME" property="rentDateTime" jdbcType="VARCHAR" />
+    <result column="RENT_NETID" property="rentNetid" jdbcType="VARCHAR" />
+    <result column="RENT_NUM" property="rentNum" jdbcType="VARCHAR" />
+    <result column="CAR_NUM" property="carNum" jdbcType="VARCHAR" />
+    <result column="INST_CARD" property="instCard" jdbcType="VARCHAR" />
+    <result column="RETURN_DATE" property="returnDate" jdbcType="VARCHAR" />
+    <result column="RETURN_TIME" property="returnTime" jdbcType="VARCHAR" />
+    <result column="RETURN_DATE_TIME" property="returnDateTime" jdbcType="VARCHAR" />
+    <result column="RETURN_NETID" property="returnNetid" jdbcType="VARCHAR" />
+    <result column="PARK_NUM" property="parkNum" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="DECIMAL" />
+    <result column="TRAN_FLAG" property="tranFlag" jdbcType="CHAR" />
+    <result column="RENT_TYPE" property="rentType" jdbcType="CHAR" />
+    <result column="CH_TYPE" property="chType" jdbcType="CHAR" />
+  </resultMap>
+
+	<!-- 用户查询 -->
+	<select id="selectLatestByCarNum" parameterType="String"
+		resultMap="BaseResultMap">
+	
+   <!-- select * from rent_use_info where car_num = 1100222 and RENT_DATE_TIME is not null and rownum &lt;  2 -->
+		select * from rent_use_info where car_num = #{_parameter} and RENT_DATE_TIME is not null and rownum &lt;  2
+			
+	</select>
+	
+	
+	
+</mapper>

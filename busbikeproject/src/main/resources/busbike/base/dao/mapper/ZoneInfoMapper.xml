@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.ZoneInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.ZoneInfo" >
+    <result column="zone_id" property="zoneId" jdbcType="VARCHAR" />
+    <result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+    <result column="center_lat" property="centerLat" jdbcType="VARCHAR" />
+    <result column="center_lng" property="centerLng" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="isvisble" property="isvisble" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    zone_id, zone_name, center_lat, center_lng, city_id, isvisble, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.base.pojo.po.ZoneInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zone_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="busbike.base.pojo.po.ZoneInfoExample" >
+    delete from zone_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.base.pojo.po.ZoneInfo" >
+    insert into zone_info (zone_id, zone_name, center_lat, 
+      center_lng, city_id, isvisble, 
+      create_time)
+    values (#{zoneId,jdbcType=VARCHAR}, #{zoneName,jdbcType=VARCHAR}, #{centerLat,jdbcType=VARCHAR}, 
+      #{centerLng,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, #{isvisble,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.base.pojo.po.ZoneInfo" >
+    insert into zone_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zoneId != null" >
+        zone_id,
+      </if>
+      <if test="zoneName != null" >
+        zone_name,
+      </if>
+      <if test="centerLat != null" >
+        center_lat,
+      </if>
+      <if test="centerLng != null" >
+        center_lng,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="isvisble != null" >
+        isvisble,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zoneId != null" >
+        #{zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLat != null" >
+        #{centerLat,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLng != null" >
+        #{centerLng,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisble != null" >
+        #{isvisble,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.base.pojo.po.ZoneInfoExample" resultType="java.lang.Integer" >
+    select count(*) from zone_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zone_info
+    <set >
+      <if test="record.zoneId != null" >
+        zone_id = #{record.zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zoneName != null" >
+        zone_name = #{record.zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerLat != null" >
+        center_lat = #{record.centerLat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centerLng != null" >
+        center_lng = #{record.centerLng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isvisble != null" >
+        isvisble = #{record.isvisble,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zone_info
+    set zone_id = #{record.zoneId,jdbcType=VARCHAR},
+      zone_name = #{record.zoneName,jdbcType=VARCHAR},
+      center_lat = #{record.centerLat,jdbcType=VARCHAR},
+      center_lng = #{record.centerLng,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=VARCHAR},
+      isvisble = #{record.isvisble,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.DictInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.DictInfo" >
+    <id column="dict_info_id" property="dictInfoId" jdbcType="INTEGER" />
+    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+    <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="dict_sort" property="dictSort" jdbcType="VARCHAR" />
+    <result column="is_enable" property="isEnable" jdbcType="VARCHAR" />
+    <result column="value_type" property="valueType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dict_info_id, dict_code, type_code, info, remark, update_time, dict_sort, is_enable, 
+    value_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.base.pojo.po.DictInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dict_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dict_info
+    where dict_info_id = #{dictInfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dict_info
+    where dict_info_id = #{dictInfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.base.pojo.po.DictInfoExample" >
+    delete from dict_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.base.pojo.po.DictInfo" >
+    insert into dict_info (dict_info_id, dict_code, type_code, 
+      info, remark, update_time, 
+      dict_sort, is_enable, value_type
+      )
+    values (#{dictInfoId,jdbcType=INTEGER}, #{dictCode,jdbcType=VARCHAR}, #{typeCode,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{dictSort,jdbcType=VARCHAR}, #{isEnable,jdbcType=VARCHAR}, #{valueType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.base.pojo.po.DictInfo" >
+    insert into dict_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictInfoId != null" >
+        dict_info_id,
+      </if>
+      <if test="dictCode != null" >
+        dict_code,
+      </if>
+      <if test="typeCode != null" >
+        type_code,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dictSort != null" >
+        dict_sort,
+      </if>
+      <if test="isEnable != null" >
+        is_enable,
+      </if>
+      <if test="valueType != null" >
+        value_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictInfoId != null" >
+        #{dictInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="dictCode != null" >
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dictSort != null" >
+        #{dictSort,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null" >
+        #{isEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="valueType != null" >
+        #{valueType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.base.pojo.po.DictInfoExample" resultType="java.lang.Integer" >
+    select count(*) from dict_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_info
+    <set >
+      <if test="record.dictInfoId != null" >
+        dict_info_id = #{record.dictInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dictCode != null" >
+        dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeCode != null" >
+        type_code = #{record.typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictSort != null" >
+        dict_sort = #{record.dictSort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEnable != null" >
+        is_enable = #{record.isEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueType != null" >
+        value_type = #{record.valueType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_info
+    set dict_info_id = #{record.dictInfoId,jdbcType=INTEGER},
+      dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      type_code = #{record.typeCode,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      dict_sort = #{record.dictSort,jdbcType=VARCHAR},
+      is_enable = #{record.isEnable,jdbcType=VARCHAR},
+      value_type = #{record.valueType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.base.pojo.po.DictInfo" >
+    update dict_info
+    <set >
+      <if test="dictCode != null" >
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        type_code = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dictSort != null" >
+        dict_sort = #{dictSort,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null" >
+        is_enable = #{isEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="valueType != null" >
+        value_type = #{valueType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dict_info_id = #{dictInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.base.pojo.po.DictInfo" >
+    update dict_info
+    set dict_code = #{dictCode,jdbcType=VARCHAR},
+      type_code = #{typeCode,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      dict_sort = #{dictSort,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=VARCHAR},
+      value_type = #{valueType,jdbcType=VARCHAR}
+    where dict_info_id = #{dictInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>

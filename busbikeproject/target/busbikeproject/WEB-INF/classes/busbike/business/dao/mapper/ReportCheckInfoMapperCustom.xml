@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.business.dao.mapper.ReportCheckInfoMapperCustom" >
+   <resultMap id="BaseResultMap" type="busbike.business.pojo.po.ReportCheckInfo" >
+    <id column="CHECK_ID" property="checkId" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="NO_REPAIR_CASE" property="noRepairCase" jdbcType="VARCHAR" />
+    <result column="CAR_NUM" property="carNum" jdbcType="VARCHAR" />
+    <result column="CHIP_NUM" property="chipNum" jdbcType="VARCHAR" />
+    <result column="CAR_ADDR" property="carAddr" jdbcType="VARCHAR" />
+    <result column="FAULT_TYPE_NUM" property="faultTypeNum" jdbcType="VARCHAR" />
+    <result column="FAULT_TYPE" property="faultType" jdbcType="VARCHAR" />
+    <result column="FAULT_NAME" property="faultName" jdbcType="VARCHAR" />
+    <result column="CAR_FAULT_DESC" property="carFaultDesc" jdbcType="VARCHAR" />
+    <result column="IS_MULTI_FAULT" property="isMultiFault" jdbcType="VARCHAR" />
+    <result column="IS_LOCK" property="isLock" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REPORT_DATE" property="reportDate" jdbcType="VARCHAR" />
+    <result column="RENT_NET_ID" property="rentNetId" jdbcType="VARCHAR" />
+    <result column="ZONE_NAME" property="zoneName" jdbcType="VARCHAR" />
+    <result column="RENT_NUM" property="rentNum" jdbcType="VARCHAR" />
+    <result column="RENT_NET_NAME" property="rentNetName" jdbcType="VARCHAR" />
+    <result column="RENT_NET_ADDR" property="rentNetAddr" jdbcType="VARCHAR" />
+    <result column="REPORT_SOURCE" property="reportSource" jdbcType="VARCHAR" />
+    <result column="REPORT_NAME" property="reportName" jdbcType="VARCHAR" />
+    <result column="REPORT_EMPNUM" property="reportEmpnum" jdbcType="VARCHAR" />
+    <result column="REPAIR_DATE" property="repairDate" jdbcType="VARCHAR" />
+    <result column="FAULT_NUM" property="faultNum" jdbcType="VARCHAR" />
+    <result column="REPAIR_MODE" property="repairMode" jdbcType="VARCHAR" />
+    <result column="REPAIR_TYPE" property="repairType" jdbcType="VARCHAR" />
+    <result column="REPAIR_EMP" property="repairEmp" jdbcType="VARCHAR" />
+    <result column="IS_REPAIR_RENT" property="isRepairRent" jdbcType="VARCHAR" />
+    <result column="REPORT_ID" property="reportId" jdbcType="VARCHAR" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="VARCHAR" />
+    <result column="IS_CREATE" property="isCreate" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_sysuser_where">
+		<if test="reportCheckInfoCustom!=null">
+			<if test="reportCheckInfoCustom.state!=null and reportCheckInfoCustom.state!=''">
+				and state = #{reportCheckInfoCustom.state}
+			</if>
+			<if test="reportCheckInfoCustom.faultName!=null and reportCheckInfoCustom.faultName!=''">
+				and fault_Name = #{reportCheckInfoCustom.faultName}
+			</if>
+			<if test="reportCheckInfoCustom.faultType!=null and reportCheckInfoCustom.faultType!=''">
+				and fault_Type = #{reportCheckInfoCustom.faultType}
+			</if>
+			
+		</if>
+	</sql>
+
+	<!-- 用户查询 -->
+	<select id="findReportCheckList" parameterType="busbike.business.pojo.vo.ReportCheckQueryVo"
+		resultMap="BaseResultMap">
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum page_num
+			from (
+		</if>
+
+		select * from report_check_info
+
+
+		<where>
+		   and IS_CREATE='0'
+			<include refid="query_sysuser_where" />
+		</where> 
+		
+		order by to_number(CHECK_ID) desc
+		
+		<if test="pageQuery!=null">
+			) page_1
+        <![CDATA[
+         where rownum <= ${pageQuery.PageQuery_end}) page_2
+         where page_2.page_num >= ${pageQuery.PageQuery_start}
+ ]]>
+		</if> 
+		
+	</select>
+	
+	<!-- 查询列表的总记录数 -->
+	<select id="findReportCheckCount" parameterType="busbike.business.pojo.vo.ReportCheckQueryVo"
+	resultType="int">
+	
+	 select count(1) from report_check_info
+
+
+		 <where>
+		    and IS_CREATE='0'
+			<include refid="query_sysuser_where" />
+
+		</where>
+	
+	</select>
+<!-- 更新审核信息 -->
+	<update id="updateReportCheck" parameterType="busbike.business.pojo.po.ReportCheckInfo" >
+    update report_check_info
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="isCreate != null" >
+        is_Create = #{isCreate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CHECK_ID = #{checkId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.business.dao.mapper.SingleCarUseInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.SingleCarUseInfo" >
+    <result column="RENT_NETID" property="rentNetid" jdbcType="VARCHAR" />
+    <result column="RETURN_NETID" property="returnNetid" jdbcType="VARCHAR" />
+    <result column="RENT_DATE_TIME" property="rentDateTime" jdbcType="VARCHAR" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="VARCHAR" />
+    <result column="RETURN_DATE" property="returnDate" jdbcType="VARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="VARCHAR" />
+    <result column="RETURN_TIME" property="returnTime" jdbcType="VARCHAR" />
+    <result column="INST_CARD" property="instCard" jdbcType="VARCHAR" />
+    <result column="CAR_NUM" property="carNum" jdbcType="VARCHAR" />
+    <result column="USE_MIN" property="useMin" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RENT_NETID, RETURN_NETID, RENT_DATE_TIME, TRAN_DATE, RETURN_DATE, TRAN_TIME, RETURN_TIME, 
+    INST_CARD, CAR_NUM, USE_MIN
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.business.pojo.po.SingleCarUseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SINGLE_CAR_USE_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="busbike.business.pojo.po.SingleCarUseInfoExample" >
+    delete from SINGLE_CAR_USE_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.business.pojo.po.SingleCarUseInfo" >
+    insert into SINGLE_CAR_USE_INFO (RENT_NETID, RETURN_NETID, RENT_DATE_TIME, 
+      TRAN_DATE, RETURN_DATE, TRAN_TIME, 
+      RETURN_TIME, INST_CARD, CAR_NUM, 
+      USE_MIN)
+    values (#{rentNetid,jdbcType=VARCHAR}, #{returnNetid,jdbcType=VARCHAR}, #{rentDateTime,jdbcType=VARCHAR}, 
+      #{tranDate,jdbcType=VARCHAR}, #{returnDate,jdbcType=VARCHAR}, #{tranTime,jdbcType=VARCHAR}, 
+      #{returnTime,jdbcType=VARCHAR}, #{instCard,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, 
+      #{useMin,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.business.pojo.po.SingleCarUseInfo" >
+    insert into SINGLE_CAR_USE_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rentNetid != null" >
+        RENT_NETID,
+      </if>
+      <if test="returnNetid != null" >
+        RETURN_NETID,
+      </if>
+      <if test="rentDateTime != null" >
+        RENT_DATE_TIME,
+      </if>
+      <if test="tranDate != null" >
+        TRAN_DATE,
+      </if>
+      <if test="returnDate != null" >
+        RETURN_DATE,
+      </if>
+      <if test="tranTime != null" >
+        TRAN_TIME,
+      </if>
+      <if test="returnTime != null" >
+        RETURN_TIME,
+      </if>
+      <if test="instCard != null" >
+        INST_CARD,
+      </if>
+      <if test="carNum != null" >
+        CAR_NUM,
+      </if>
+      <if test="useMin != null" >
+        USE_MIN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rentNetid != null" >
+        #{rentNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNetid != null" >
+        #{returnNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="rentDateTime != null" >
+        #{rentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDate != null" >
+        #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tranTime != null" >
+        #{tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="instCard != null" >
+        #{instCard,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="useMin != null" >
+        #{useMin,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.business.pojo.po.SingleCarUseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from SINGLE_CAR_USE_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SINGLE_CAR_USE_INFO
+    <set >
+      <if test="record.rentNetid != null" >
+        RENT_NETID = #{record.rentNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnNetid != null" >
+        RETURN_NETID = #{record.returnNetid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentDateTime != null" >
+        RENT_DATE_TIME = #{record.rentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranDate != null" >
+        TRAN_DATE = #{record.tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnDate != null" >
+        RETURN_DATE = #{record.returnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranTime != null" >
+        TRAN_TIME = #{record.tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnTime != null" >
+        RETURN_TIME = #{record.returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instCard != null" >
+        INST_CARD = #{record.instCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNum != null" >
+        CAR_NUM = #{record.carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useMin != null" >
+        USE_MIN = #{record.useMin,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SINGLE_CAR_USE_INFO
+    set RENT_NETID = #{record.rentNetid,jdbcType=VARCHAR},
+      RETURN_NETID = #{record.returnNetid,jdbcType=VARCHAR},
+      RENT_DATE_TIME = #{record.rentDateTime,jdbcType=VARCHAR},
+      TRAN_DATE = #{record.tranDate,jdbcType=VARCHAR},
+      RETURN_DATE = #{record.returnDate,jdbcType=VARCHAR},
+      TRAN_TIME = #{record.tranTime,jdbcType=VARCHAR},
+      RETURN_TIME = #{record.returnTime,jdbcType=VARCHAR},
+      INST_CARD = #{record.instCard,jdbcType=VARCHAR},
+      CAR_NUM = #{record.carNum,jdbcType=VARCHAR},
+      USE_MIN = #{record.useMin,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.SysInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.SysInfo" >
+    <id column="SYS_ID" property="sysId" jdbcType="VARCHAR" />
+    <result column="SYS_KEY" property="sysKey" jdbcType="VARCHAR" />
+    <result column="SYS_VALUE" property="sysValue" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SYS_ID, SYS_KEY, SYS_VALUE, DESCRIPTION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.base.pojo.po.SysInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_INFO
+    where SYS_ID = #{sysId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_INFO
+    where SYS_ID = #{sysId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.base.pojo.po.SysInfoExample" >
+    delete from SYS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.base.pojo.po.SysInfo" >
+    insert into SYS_INFO (SYS_ID, SYS_KEY, SYS_VALUE, 
+      DESCRIPTION)
+    values (#{sysId,jdbcType=VARCHAR}, #{sysKey,jdbcType=VARCHAR}, #{sysValue,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.base.pojo.po.SysInfo" >
+    insert into SYS_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysId != null" >
+        SYS_ID,
+      </if>
+      <if test="sysKey != null" >
+        SYS_KEY,
+      </if>
+      <if test="sysValue != null" >
+        SYS_VALUE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysId != null" >
+        #{sysId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysKey != null" >
+        #{sysKey,jdbcType=VARCHAR},
+      </if>
+      <if test="sysValue != null" >
+        #{sysValue,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.base.pojo.po.SysInfoExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_INFO
+    <set >
+      <if test="record.sysId != null" >
+        SYS_ID = #{record.sysId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysKey != null" >
+        SYS_KEY = #{record.sysKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysValue != null" >
+        SYS_VALUE = #{record.sysValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_INFO
+    set SYS_ID = #{record.sysId,jdbcType=VARCHAR},
+      SYS_KEY = #{record.sysKey,jdbcType=VARCHAR},
+      SYS_VALUE = #{record.sysValue,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.base.pojo.po.SysInfo" >
+    update SYS_INFO
+    <set >
+      <if test="sysKey != null" >
+        SYS_KEY = #{sysKey,jdbcType=VARCHAR},
+      </if>
+      <if test="sysValue != null" >
+        SYS_VALUE = #{sysValue,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SYS_ID = #{sysId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.base.pojo.po.SysInfo" >
+    update SYS_INFO
+    set SYS_KEY = #{sysKey,jdbcType=VARCHAR},
+      SYS_VALUE = #{sysValue,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR}
+    where SYS_ID = #{sysId,jdbcType=VARCHAR}
+  </update>
+</mapper>

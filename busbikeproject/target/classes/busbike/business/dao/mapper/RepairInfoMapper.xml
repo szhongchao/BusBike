@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.business.dao.mapper.RepairInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.RepairInfo" >
+    <id column="repair_id" property="repairId" jdbcType="INTEGER" />
+    <result column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="no_maintain_case" property="noMaintainCase" jdbcType="VARCHAR" />
+    <result column="latest_rent_date_time" property="latestRentDateTime" jdbcType="VARCHAR" />
+    <result column="report_date_time" property="reportDateTime" jdbcType="VARCHAR" />
+    <result column="sheet_create_date_time" property="sheetCreateDateTime" jdbcType="VARCHAR" />
+    <result column="repair_date_time" property="repairDateTime" jdbcType="VARCHAR" />
+    <result column="zone_id" property="zoneId" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="rent_net_id" property="rentNetId" jdbcType="VARCHAR" />
+    <result column="rent_num" property="rentNum" jdbcType="VARCHAR" />
+    <result column="rent_net_name" property="rentNetName" jdbcType="VARCHAR" />
+    <result column="rent_net_addr" property="rentNetAddr" jdbcType="VARCHAR" />
+    <result column="report_source" property="reportSource" jdbcType="VARCHAR" />
+    <result column="report_name" property="reportName" jdbcType="VARCHAR" />
+    <result column="report_emp_id" property="reportEmpId" jdbcType="VARCHAR" />
+    <result column="check_emp_id" property="checkEmpId" jdbcType="VARCHAR" />
+    <result column="repair_emp_id" property="repairEmpId" jdbcType="VARCHAR" />
+    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
+    <result column="chip_num" property="chipNum" jdbcType="VARCHAR" />
+    <result column="car_addr" property="carAddr" jdbcType="VARCHAR" />
+    <result column="fault_num" property="faultNum" jdbcType="VARCHAR" />
+    <result column="fault_type_num" property="faultTypeNum" jdbcType="VARCHAR" />
+    <result column="fault_type" property="faultType" jdbcType="VARCHAR" />
+    <result column="fault_name" property="faultName" jdbcType="VARCHAR" />
+    <result column="car_fault_desc" property="carFaultDesc" jdbcType="VARCHAR" />
+    <result column="is_multi_fault" property="isMultiFault" jdbcType="VARCHAR" />
+    <result column="is_lock" property="isLock" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="repair_mode" property="repairMode" jdbcType="VARCHAR" />
+    <result column="repair_type" property="repairType" jdbcType="VARCHAR" />
+    <result column="is_repair_rent" property="isRepairRent" jdbcType="VARCHAR" />
+    <result column="repair_b_p1" property="repairBP1" jdbcType="VARCHAR" />
+    <result column="repair_b_p2" property="repairBP2" jdbcType="VARCHAR" />
+    <result column="repair_b_p3" property="repairBP3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    repair_id, report_id, state, no_maintain_case, latest_rent_date_time, report_date_time, 
+    sheet_create_date_time, repair_date_time, zone_id, area_id, rent_net_id, rent_num, 
+    rent_net_name, rent_net_addr, report_source, report_name, report_emp_id, check_emp_id, 
+    repair_emp_id, car_num, chip_num, car_addr, fault_num, fault_type_num, fault_type, 
+    fault_name, car_fault_desc, is_multi_fault, is_lock, remark, create_date, repair_mode, 
+    repair_type, is_repair_rent, repair_b_p1, repair_b_p2, repair_b_p3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.business.pojo.po.RepairInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from repair_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from repair_info
+    where repair_id = #{repairId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from repair_info
+    where repair_id = #{repairId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.business.pojo.po.RepairInfoExample" >
+    delete from repair_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.business.pojo.po.RepairInfo" >
+    insert into repair_info (repair_id, report_id, state, 
+      no_maintain_case, latest_rent_date_time, report_date_time, 
+      sheet_create_date_time, repair_date_time, zone_id, 
+      area_id, rent_net_id, rent_num, 
+      rent_net_name, rent_net_addr, report_source, 
+      report_name, report_emp_id, check_emp_id, 
+      repair_emp_id, car_num, chip_num, 
+      car_addr, fault_num, fault_type_num, 
+      fault_type, fault_name, car_fault_desc, 
+      is_multi_fault, is_lock, remark, 
+      create_date, repair_mode, repair_type, 
+      is_repair_rent, repair_b_p1, repair_b_p2, 
+      repair_b_p3)
+    values (#{repairId,jdbcType=INTEGER}, #{reportId,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
+      #{noMaintainCase,jdbcType=VARCHAR}, #{latestRentDateTime,jdbcType=VARCHAR}, #{reportDateTime,jdbcType=VARCHAR}, 
+      #{sheetCreateDateTime,jdbcType=VARCHAR}, #{repairDateTime,jdbcType=VARCHAR}, #{zoneId,jdbcType=VARCHAR}, 
+      #{areaId,jdbcType=VARCHAR}, #{rentNetId,jdbcType=VARCHAR}, #{rentNum,jdbcType=VARCHAR}, 
+      #{rentNetName,jdbcType=VARCHAR}, #{rentNetAddr,jdbcType=VARCHAR}, #{reportSource,jdbcType=VARCHAR}, 
+      #{reportName,jdbcType=VARCHAR}, #{reportEmpId,jdbcType=VARCHAR}, #{checkEmpId,jdbcType=VARCHAR}, 
+      #{repairEmpId,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{chipNum,jdbcType=VARCHAR}, 
+      #{carAddr,jdbcType=VARCHAR}, #{faultNum,jdbcType=VARCHAR}, #{faultTypeNum,jdbcType=VARCHAR}, 
+      #{faultType,jdbcType=VARCHAR}, #{faultName,jdbcType=VARCHAR}, #{carFaultDesc,jdbcType=VARCHAR}, 
+      #{isMultiFault,jdbcType=VARCHAR}, #{isLock,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{repairMode,jdbcType=VARCHAR}, #{repairType,jdbcType=VARCHAR}, 
+      #{isRepairRent,jdbcType=VARCHAR}, #{repairBP1,jdbcType=VARCHAR}, #{repairBP2,jdbcType=VARCHAR}, 
+      #{repairBP3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.business.pojo.po.RepairInfo" >
+    insert into repair_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repairId != null" >
+        repair_id,
+      </if>
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="noMaintainCase != null" >
+        no_maintain_case,
+      </if>
+      <if test="latestRentDateTime != null" >
+        latest_rent_date_time,
+      </if>
+      <if test="reportDateTime != null" >
+        report_date_time,
+      </if>
+      <if test="sheetCreateDateTime != null" >
+        sheet_create_date_time,
+      </if>
+      <if test="repairDateTime != null" >
+        repair_date_time,
+      </if>
+      <if test="zoneId != null" >
+        zone_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="rentNetId != null" >
+        rent_net_id,
+      </if>
+      <if test="rentNum != null" >
+        rent_num,
+      </if>
+      <if test="rentNetName != null" >
+        rent_net_name,
+      </if>
+      <if test="rentNetAddr != null" >
+        rent_net_addr,
+      </if>
+      <if test="reportSource != null" >
+        report_source,
+      </if>
+      <if test="reportName != null" >
+        report_name,
+      </if>
+      <if test="reportEmpId != null" >
+        report_emp_id,
+      </if>
+      <if test="checkEmpId != null" >
+        check_emp_id,
+      </if>
+      <if test="repairEmpId != null" >
+        repair_emp_id,
+      </if>
+      <if test="carNum != null" >
+        car_num,
+      </if>
+      <if test="chipNum != null" >
+        chip_num,
+      </if>
+      <if test="carAddr != null" >
+        car_addr,
+      </if>
+      <if test="faultNum != null" >
+        fault_num,
+      </if>
+      <if test="faultTypeNum != null" >
+        fault_type_num,
+      </if>
+      <if test="faultType != null" >
+        fault_type,
+      </if>
+      <if test="faultName != null" >
+        fault_name,
+      </if>
+      <if test="carFaultDesc != null" >
+        car_fault_desc,
+      </if>
+      <if test="isMultiFault != null" >
+        is_multi_fault,
+      </if>
+      <if test="isLock != null" >
+        is_lock,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="repairMode != null" >
+        repair_mode,
+      </if>
+      <if test="repairType != null" >
+        repair_type,
+      </if>
+      <if test="isRepairRent != null" >
+        is_repair_rent,
+      </if>
+      <if test="repairBP1 != null" >
+        repair_b_p1,
+      </if>
+      <if test="repairBP2 != null" >
+        repair_b_p2,
+      </if>
+      <if test="repairBP3 != null" >
+        repair_b_p3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repairId != null" >
+        #{repairId,jdbcType=INTEGER},
+      </if>
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="noMaintainCase != null" >
+        #{noMaintainCase,jdbcType=VARCHAR},
+      </if>
+      <if test="latestRentDateTime != null" >
+        #{latestRentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDateTime != null" >
+        #{reportDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetCreateDateTime != null" >
+        #{sheetCreateDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repairDateTime != null" >
+        #{repairDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneId != null" >
+        #{zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetId != null" >
+        #{rentNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNum != null" >
+        #{rentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetName != null" >
+        #{rentNetName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetAddr != null" >
+        #{rentNetAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="reportSource != null" >
+        #{reportSource,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null" >
+        #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportEmpId != null" >
+        #{reportEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkEmpId != null" >
+        #{checkEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="repairEmpId != null" >
+        #{repairEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="chipNum != null" >
+        #{chipNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carAddr != null" >
+        #{carAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="faultNum != null" >
+        #{faultNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultTypeNum != null" >
+        #{faultTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultType != null" >
+        #{faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="faultName != null" >
+        #{faultName,jdbcType=VARCHAR},
+      </if>
+      <if test="carFaultDesc != null" >
+        #{carFaultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isMultiFault != null" >
+        #{isMultiFault,jdbcType=VARCHAR},
+      </if>
+      <if test="isLock != null" >
+        #{isLock,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="repairMode != null" >
+        #{repairMode,jdbcType=VARCHAR},
+      </if>
+      <if test="repairType != null" >
+        #{repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="isRepairRent != null" >
+        #{isRepairRent,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP1 != null" >
+        #{repairBP1,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP2 != null" >
+        #{repairBP2,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP3 != null" >
+        #{repairBP3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.business.pojo.po.RepairInfoExample" resultType="java.lang.Integer" >
+    select count(*) from repair_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update repair_info
+    <set >
+      <if test="record.repairId != null" >
+        repair_id = #{record.repairId,jdbcType=INTEGER},
+      </if>
+      <if test="record.reportId != null" >
+        report_id = #{record.reportId,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noMaintainCase != null" >
+        no_maintain_case = #{record.noMaintainCase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latestRentDateTime != null" >
+        latest_rent_date_time = #{record.latestRentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportDateTime != null" >
+        report_date_time = #{record.reportDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sheetCreateDateTime != null" >
+        sheet_create_date_time = #{record.sheetCreateDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairDateTime != null" >
+        repair_date_time = #{record.repairDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zoneId != null" >
+        zone_id = #{record.zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNetId != null" >
+        rent_net_id = #{record.rentNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNum != null" >
+        rent_num = #{record.rentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNetName != null" >
+        rent_net_name = #{record.rentNetName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentNetAddr != null" >
+        rent_net_addr = #{record.rentNetAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportSource != null" >
+        report_source = #{record.reportSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportName != null" >
+        report_name = #{record.reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportEmpId != null" >
+        report_emp_id = #{record.reportEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkEmpId != null" >
+        check_emp_id = #{record.checkEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairEmpId != null" >
+        repair_emp_id = #{record.repairEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNum != null" >
+        car_num = #{record.carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chipNum != null" >
+        chip_num = #{record.chipNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carAddr != null" >
+        car_addr = #{record.carAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faultNum != null" >
+        fault_num = #{record.faultNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faultTypeNum != null" >
+        fault_type_num = #{record.faultTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faultType != null" >
+        fault_type = #{record.faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faultName != null" >
+        fault_name = #{record.faultName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carFaultDesc != null" >
+        car_fault_desc = #{record.carFaultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMultiFault != null" >
+        is_multi_fault = #{record.isMultiFault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLock != null" >
+        is_lock = #{record.isLock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairMode != null" >
+        repair_mode = #{record.repairMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairType != null" >
+        repair_type = #{record.repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRepairRent != null" >
+        is_repair_rent = #{record.isRepairRent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairBP1 != null" >
+        repair_b_p1 = #{record.repairBP1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairBP2 != null" >
+        repair_b_p2 = #{record.repairBP2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairBP3 != null" >
+        repair_b_p3 = #{record.repairBP3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update repair_info
+    set repair_id = #{record.repairId,jdbcType=INTEGER},
+      report_id = #{record.reportId,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      no_maintain_case = #{record.noMaintainCase,jdbcType=VARCHAR},
+      latest_rent_date_time = #{record.latestRentDateTime,jdbcType=VARCHAR},
+      report_date_time = #{record.reportDateTime,jdbcType=VARCHAR},
+      sheet_create_date_time = #{record.sheetCreateDateTime,jdbcType=VARCHAR},
+      repair_date_time = #{record.repairDateTime,jdbcType=VARCHAR},
+      zone_id = #{record.zoneId,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=VARCHAR},
+      rent_net_id = #{record.rentNetId,jdbcType=VARCHAR},
+      rent_num = #{record.rentNum,jdbcType=VARCHAR},
+      rent_net_name = #{record.rentNetName,jdbcType=VARCHAR},
+      rent_net_addr = #{record.rentNetAddr,jdbcType=VARCHAR},
+      report_source = #{record.reportSource,jdbcType=VARCHAR},
+      report_name = #{record.reportName,jdbcType=VARCHAR},
+      report_emp_id = #{record.reportEmpId,jdbcType=VARCHAR},
+      check_emp_id = #{record.checkEmpId,jdbcType=VARCHAR},
+      repair_emp_id = #{record.repairEmpId,jdbcType=VARCHAR},
+      car_num = #{record.carNum,jdbcType=VARCHAR},
+      chip_num = #{record.chipNum,jdbcType=VARCHAR},
+      car_addr = #{record.carAddr,jdbcType=VARCHAR},
+      fault_num = #{record.faultNum,jdbcType=VARCHAR},
+      fault_type_num = #{record.faultTypeNum,jdbcType=VARCHAR},
+      fault_type = #{record.faultType,jdbcType=VARCHAR},
+      fault_name = #{record.faultName,jdbcType=VARCHAR},
+      car_fault_desc = #{record.carFaultDesc,jdbcType=VARCHAR},
+      is_multi_fault = #{record.isMultiFault,jdbcType=VARCHAR},
+      is_lock = #{record.isLock,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=VARCHAR},
+      repair_mode = #{record.repairMode,jdbcType=VARCHAR},
+      repair_type = #{record.repairType,jdbcType=VARCHAR},
+      is_repair_rent = #{record.isRepairRent,jdbcType=VARCHAR},
+      repair_b_p1 = #{record.repairBP1,jdbcType=VARCHAR},
+      repair_b_p2 = #{record.repairBP2,jdbcType=VARCHAR},
+      repair_b_p3 = #{record.repairBP3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.business.pojo.po.RepairInfo" >
+    update repair_info
+    <set >
+      <if test="reportId != null" >
+        report_id = #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="noMaintainCase != null" >
+        no_maintain_case = #{noMaintainCase,jdbcType=VARCHAR},
+      </if>
+      <if test="latestRentDateTime != null" >
+        latest_rent_date_time = #{latestRentDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDateTime != null" >
+        report_date_time = #{reportDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetCreateDateTime != null" >
+        sheet_create_date_time = #{sheetCreateDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repairDateTime != null" >
+        repair_date_time = #{repairDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneId != null" >
+        zone_id = #{zoneId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetId != null" >
+        rent_net_id = #{rentNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNum != null" >
+        rent_num = #{rentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetName != null" >
+        rent_net_name = #{rentNetName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentNetAddr != null" >
+        rent_net_addr = #{rentNetAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="reportSource != null" >
+        report_source = #{reportSource,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null" >
+        report_name = #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportEmpId != null" >
+        report_emp_id = #{reportEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkEmpId != null" >
+        check_emp_id = #{checkEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="repairEmpId != null" >
+        repair_emp_id = #{repairEmpId,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        car_num = #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="chipNum != null" >
+        chip_num = #{chipNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carAddr != null" >
+        car_addr = #{carAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="faultNum != null" >
+        fault_num = #{faultNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultTypeNum != null" >
+        fault_type_num = #{faultTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultType != null" >
+        fault_type = #{faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="faultName != null" >
+        fault_name = #{faultName,jdbcType=VARCHAR},
+      </if>
+      <if test="carFaultDesc != null" >
+        car_fault_desc = #{carFaultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isMultiFault != null" >
+        is_multi_fault = #{isMultiFault,jdbcType=VARCHAR},
+      </if>
+      <if test="isLock != null" >
+        is_lock = #{isLock,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="repairMode != null" >
+        repair_mode = #{repairMode,jdbcType=VARCHAR},
+      </if>
+      <if test="repairType != null" >
+        repair_type = #{repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="isRepairRent != null" >
+        is_repair_rent = #{isRepairRent,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP1 != null" >
+        repair_b_p1 = #{repairBP1,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP2 != null" >
+        repair_b_p2 = #{repairBP2,jdbcType=VARCHAR},
+      </if>
+      <if test="repairBP3 != null" >
+        repair_b_p3 = #{repairBP3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where repair_id = #{repairId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.business.pojo.po.RepairInfo" >
+    update repair_info
+    set report_id = #{reportId,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      no_maintain_case = #{noMaintainCase,jdbcType=VARCHAR},
+      latest_rent_date_time = #{latestRentDateTime,jdbcType=VARCHAR},
+      report_date_time = #{reportDateTime,jdbcType=VARCHAR},
+      sheet_create_date_time = #{sheetCreateDateTime,jdbcType=VARCHAR},
+      repair_date_time = #{repairDateTime,jdbcType=VARCHAR},
+      zone_id = #{zoneId,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=VARCHAR},
+      rent_net_id = #{rentNetId,jdbcType=VARCHAR},
+      rent_num = #{rentNum,jdbcType=VARCHAR},
+      rent_net_name = #{rentNetName,jdbcType=VARCHAR},
+      rent_net_addr = #{rentNetAddr,jdbcType=VARCHAR},
+      report_source = #{reportSource,jdbcType=VARCHAR},
+      report_name = #{reportName,jdbcType=VARCHAR},
+      report_emp_id = #{reportEmpId,jdbcType=VARCHAR},
+      check_emp_id = #{checkEmpId,jdbcType=VARCHAR},
+      repair_emp_id = #{repairEmpId,jdbcType=VARCHAR},
+      car_num = #{carNum,jdbcType=VARCHAR},
+      chip_num = #{chipNum,jdbcType=VARCHAR},
+      car_addr = #{carAddr,jdbcType=VARCHAR},
+      fault_num = #{faultNum,jdbcType=VARCHAR},
+      fault_type_num = #{faultTypeNum,jdbcType=VARCHAR},
+      fault_type = #{faultType,jdbcType=VARCHAR},
+      fault_name = #{faultName,jdbcType=VARCHAR},
+      car_fault_desc = #{carFaultDesc,jdbcType=VARCHAR},
+      is_multi_fault = #{isMultiFault,jdbcType=VARCHAR},
+      is_lock = #{isLock,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      repair_mode = #{repairMode,jdbcType=VARCHAR},
+      repair_type = #{repairType,jdbcType=VARCHAR},
+      is_repair_rent = #{isRepairRent,jdbcType=VARCHAR},
+      repair_b_p1 = #{repairBP1,jdbcType=VARCHAR},
+      repair_b_p2 = #{repairBP2,jdbcType=VARCHAR},
+      repair_b_p3 = #{repairBP3,jdbcType=VARCHAR}
+    where repair_id = #{repairId,jdbcType=INTEGER}
+  </update>
+</mapper>

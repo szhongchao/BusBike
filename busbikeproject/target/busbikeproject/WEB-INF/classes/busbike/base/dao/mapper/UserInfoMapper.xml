@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.base.dao.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="busbike.base.pojo.po.UserInfo" >
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="ISVISIBLE" property="isvisible" jdbcType="VARCHAR" />
+    <result column="SECURITY_LEVEL" property="securityLevel" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_ID" property="userClassId" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_NAME" property="userClassName" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_ID" property="userGroupId" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_NAME" property="userGroupName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USER_TYPE_ID" property="userTypeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, USER_PASSWORD, REAL_NAME, USER_TYPE, TELEPHONE, EMAIL, USER_ADDRESS, 
+    BIRTHDAY, COMPANY_NAME, COMPANY_ADDRESS, ISVISIBLE, SECURITY_LEVEL, USER_CLASS_ID, 
+    USER_CLASS_NAME, USER_GROUP_ID, USER_GROUP_NAME, DESCRIPTION, USER_TYPE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="busbike.base.pojo.po.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from USER_INFO
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from USER_INFO
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="busbike.base.pojo.po.UserInfoExample" >
+    delete from USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="busbike.base.pojo.po.UserInfo" >
+    insert into USER_INFO (USER_ID, USER_NAME, USER_PASSWORD, 
+      REAL_NAME, USER_TYPE, TELEPHONE, 
+      EMAIL, USER_ADDRESS, BIRTHDAY, 
+      COMPANY_NAME, COMPANY_ADDRESS, ISVISIBLE, 
+      SECURITY_LEVEL, USER_CLASS_ID, USER_CLASS_NAME, 
+      USER_GROUP_ID, USER_GROUP_NAME, DESCRIPTION, 
+      USER_TYPE_ID)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{isvisible,jdbcType=VARCHAR}, 
+      #{securityLevel,jdbcType=VARCHAR}, #{userClassId,jdbcType=VARCHAR}, #{userClassName,jdbcType=VARCHAR}, 
+      #{userGroupId,jdbcType=VARCHAR}, #{userGroupName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{userTypeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="busbike.base.pojo.po.UserInfo" >
+    insert into USER_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD,
+      </if>
+      <if test="realName != null" >
+        REAL_NAME,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="userAddress != null" >
+        USER_ADDRESS,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS,
+      </if>
+      <if test="isvisible != null" >
+        ISVISIBLE,
+      </if>
+      <if test="securityLevel != null" >
+        SECURITY_LEVEL,
+      </if>
+      <if test="userClassId != null" >
+        USER_CLASS_ID,
+      </if>
+      <if test="userClassName != null" >
+        USER_CLASS_NAME,
+      </if>
+      <if test="userGroupId != null" >
+        USER_GROUP_ID,
+      </if>
+      <if test="userGroupName != null" >
+        USER_GROUP_NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="userTypeId != null" >
+        USER_TYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null" >
+        #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="securityLevel != null" >
+        #{securityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassId != null" >
+        #{userClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassName != null" >
+        #{userClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGroupId != null" >
+        #{userGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="userGroupName != null" >
+        #{userGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="userTypeId != null" >
+        #{userTypeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="busbike.base.pojo.po.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update USER_INFO
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null" >
+        REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAddress != null" >
+        USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyAddress != null" >
+        COMPANY_ADDRESS = #{record.companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isvisible != null" >
+        ISVISIBLE = #{record.isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="record.securityLevel != null" >
+        SECURITY_LEVEL = #{record.securityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userClassId != null" >
+        USER_CLASS_ID = #{record.userClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userClassName != null" >
+        USER_CLASS_NAME = #{record.userClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGroupId != null" >
+        USER_GROUP_ID = #{record.userGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGroupName != null" >
+        USER_GROUP_NAME = #{record.userGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userTypeId != null" >
+        USER_TYPE_ID = #{record.userTypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update USER_INFO
+    set USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+      USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{record.companyAddress,jdbcType=VARCHAR},
+      ISVISIBLE = #{record.isvisible,jdbcType=VARCHAR},
+      SECURITY_LEVEL = #{record.securityLevel,jdbcType=VARCHAR},
+      USER_CLASS_ID = #{record.userClassId,jdbcType=VARCHAR},
+      USER_CLASS_NAME = #{record.userClassName,jdbcType=VARCHAR},
+      USER_GROUP_ID = #{record.userGroupId,jdbcType=VARCHAR},
+      USER_GROUP_NAME = #{record.userGroupName,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      USER_TYPE_ID = #{record.userTypeId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="busbike.base.pojo.po.UserInfo" >
+    update USER_INFO
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null" >
+        ISVISIBLE = #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="securityLevel != null" >
+        SECURITY_LEVEL = #{securityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassId != null" >
+        USER_CLASS_ID = #{userClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassName != null" >
+        USER_CLASS_NAME = #{userClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGroupId != null" >
+        USER_GROUP_ID = #{userGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="userGroupName != null" >
+        USER_GROUP_NAME = #{userGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="userTypeId != null" >
+        USER_TYPE_ID = #{userTypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="busbike.base.pojo.po.UserInfo" >
+    update USER_INFO
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      REAL_NAME = #{realName,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      ISVISIBLE = #{isvisible,jdbcType=VARCHAR},
+      SECURITY_LEVEL = #{securityLevel,jdbcType=VARCHAR},
+      USER_CLASS_ID = #{userClassId,jdbcType=VARCHAR},
+      USER_CLASS_NAME = #{userClassName,jdbcType=VARCHAR},
+      USER_GROUP_ID = #{userGroupId,jdbcType=VARCHAR},
+      USER_GROUP_NAME = #{userGroupName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      USER_TYPE_ID = #{userTypeId,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.business.dao.mapper.MaintainInfoMapperCustom">
+   <resultMap id="BaseResultMap" type="busbike.business.pojo.po.MaintainInfo" >
+    <id column="maintain_id" property="maintainId" jdbcType="INTEGER" />
+    <result column="repair_id" property="repairId" jdbcType="INTEGER" />
+    <result column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="no_maintain_case" property="noMaintainCase" jdbcType="VARCHAR" />
+    <result column="latest_rent_date_time" property="latestRentDateTime" jdbcType="VARCHAR" />
+    <result column="report_date_time" property="reportDateTime" jdbcType="VARCHAR" />
+    <result column="sheet_create_date_time" property="sheetCreateDateTime" jdbcType="VARCHAR" />
+    <result column="repair_date_time" property="repairDateTime" jdbcType="VARCHAR" />
+    <result column="zone_id" property="zoneId" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="rent_net_id" property="rentNetId" jdbcType="VARCHAR" />
+    <result column="rent_num" property="rentNum" jdbcType="VARCHAR" />
+    <result column="rent_net_name" property="rentNetName" jdbcType="VARCHAR" />
+    <result column="rent_net_addr" property="rentNetAddr" jdbcType="VARCHAR" />
+    <result column="report_source" property="reportSource" jdbcType="VARCHAR" />
+    <result column="report_name" property="reportName" jdbcType="VARCHAR" />
+    <result column="report_emp_id" property="reportEmpId" jdbcType="VARCHAR" />
+    <result column="check_emp_id" property="checkEmpId" jdbcType="VARCHAR" />
+    <result column="repair_emp_id" property="repairEmpId" jdbcType="VARCHAR" />
+    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
+    <result column="chip_num" property="chipNum" jdbcType="VARCHAR" />
+    <result column="car_addr" property="carAddr" jdbcType="VARCHAR" />
+    <result column="fault_num" property="faultNum" jdbcType="VARCHAR" />
+    <result column="fault_type_num" property="faultTypeNum" jdbcType="VARCHAR" />
+    <result column="fault_type" property="faultType" jdbcType="VARCHAR" />
+    <result column="fault_name" property="faultName" jdbcType="VARCHAR" />
+    <result column="car_fault_desc" property="carFaultDesc" jdbcType="VARCHAR" />
+    <result column="is_multi_fault" property="isMultiFault" jdbcType="VARCHAR" />
+    <result column="is_lock" property="isLock" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="repair_mode" property="repairMode" jdbcType="VARCHAR" />
+    <result column="repair_type" property="repairType" jdbcType="VARCHAR" />
+    <result column="is_repair_rent" property="isRepairRent" jdbcType="VARCHAR" />
+    <result column="maintain_b_p1" property="maintainBP1" jdbcType="VARCHAR" />
+    <result column="maintain_b_p2" property="maintainBP2" jdbcType="VARCHAR" />
+    <result column="maintain_b_p3" property="maintainBP3" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_sysuser_where">
+		<if test="maintainInfo!=null">
+			<if test="maintainInfo.state!=null and maintainInfo.state!=''">
+				and state = #{maintainInfo.state}
+			</if>
+			<if test="maintainInfo.reportEmpId!=null and maintainInfo.reportEmpId!=''">
+				and REPORT_EMP_ID = #{maintainInfo.reportEmpId}
+			</if>
+			<if test="maintainInfo.checkEmpId!=null and maintainInfo.checkEmpId!=''">
+				and CHECK_EMP_ID = #{maintainInfo.checkEmpId}
+			</if>
+			<if test="maintainInfo.repairEmpId!=null and maintainInfo.repairEmpId!=''">
+				and REPAIR_EMP_id = #{maintainInfo.repairEmpId}
+			</if>
+			<if test="maintainInfo.faultName!=null and maintainInfo.faultName!=''">
+				and fault_Name = #{maintainInfo.faultName}
+			</if>
+			<if test="maintainInfo.faultType!=null and maintainInfo.faultType!=''">
+				and fault_Type = #{maintainInfo.faultType}
+			</if>
+			
+		</if>
+	</sql>
+
+	<!-- 查询列表的总记录数 -->
+	<select id="countMaintainInfo" parameterType="busbike.business.pojo.vo.MaintainQueryVo"
+	resultType="int">
+	
+	 select count(1) from maintain_info
+
+
+		 <where>
+			<include refid="query_sysuser_where" />
+		</where>
+	
+	</select>
+
+	<!-- 查询记录列表-->
+	<select id="selectMaintainInfoList" parameterType="busbike.business.pojo.vo.MaintainQueryVo"
+		resultMap="BaseResultMap">
+
+		select SQL_CALC_FOUND_ROWS * from maintain_info
+
+
+		<where>
+			<include refid="query_sysuser_where" />
+		</where> 
+		
+		<!-- 分页查询 -->
+		 <if test="pageQuery!=null">
+			
+			LIMIT ${pageQuery.PageQuery_start} ,${pageQuery.PageQuery_end} ;
+		</if> 	
+		
+	</select>
+	
+	<!-- 根据报修编号查询最新维修记录-->
+	<select id="selectLatestByReportId" parameterType="String"
+		resultMap="BaseResultMap">
+		<!-- select * from report_info -->
+		
+		select * from maintain_info where report_id = #{_parameter}  LIMIT 1
+	</select>
+	
+
+</mapper>

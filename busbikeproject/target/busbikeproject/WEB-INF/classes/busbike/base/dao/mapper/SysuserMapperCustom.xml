@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.base.dao.mapper.SysuserMapperCustom">
+    <resultMap id="BaseResultMap" type="busbike.base.pojo.vo.SysuserCustom" >
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="ISVISIBLE" property="isvisible" jdbcType="VARCHAR" />
+    <result column="SECURITY_LEVEL" property="securityLevel" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_ID" property="userClassId" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_NAME" property="userClassName" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_ID" property="userGroupId" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_NAME" property="userGroupName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_sysuser_where">
+		<if test="sysuserCustom!=null">
+			<if test="sysuserCustom.userType!=null and sysuserCustom.userType!=''">
+				and user_id = #{sysuserCustom.userType}
+			</if>
+			<if test="sysuserCustom.userName!=null and sysuserCustom.userName!=''">
+				and user_name = #{sysuserCustom.userName}
+			</if>
+			<if test="sysuserCustom.userClassName!=null and sysuserCustom.userClassName!=''">
+				and user_className = #{sysuserCustom.userClassName}
+			</if>
+			<if test="sysuserCustom.userGroupName!=null and sysuserCustom.userGroupName!=''">
+				and user_groupName = #{sysuserCustom.userGroupName}
+			</if>
+			
+		</if>
+	</sql>
+
+	<!-- 用户查询 -->
+	<select id="findSysuserList" parameterType="busbike.base.pojo.vo.SysuserQueryVo"
+		resultMap="BaseResultMap">
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum page_num
+			from (
+		</if>
+
+		select * from USER_INFO 
+
+
+		<where>
+			<include refid="query_sysuser_where" />
+		</where> 
+
+		<if test="pageQuery!=null">
+			) page_1
+        <![CDATA[
+         where rownum <= ${pageQuery.PageQuery_end}) page_2
+         where page_2.page_num >= ${pageQuery.PageQuery_start}
+ ]]>
+		</if> 
+	</select>
+	
+	<!-- 查询列表的总记录数 -->
+	<select id="findSysuserCount" parameterType="busbike.base.pojo.vo.SysuserQueryVo"
+	resultType="int">
+	
+	 select count(*) from USER_INFO 
+
+
+		 <where>
+			<include refid="query_sysuser_where" />
+		</where>
+	
+	</select>
+
+</mapper>

@@ -1,0 +1,45 @@
+{
+   "menus" : [ {"icon" : "icon-sys","menuid" : "1","menuname" : "维修管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "报修列表","url" : "/busbikeproject/report/queryReport.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "审核列表","url" : "/busbikeproject/reportCheck/queryCheck.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "维修工作表","url" : "/busbikeproject/repair/queryRepair.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "维护列表","url" : "/busbikeproject/maintain/querymaintain.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "导出功能","url" : "/busbikeproject/maintain/exportmaintain.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "导入功能","url" : "/busbikeproject/maintain/importmaintain.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "材料管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "创建采购单","url" : "/busbikeproject/cgd/addcgd.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "采购单维护","url" : "/busbikeproject/cgd/querycgd.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "采购单审核","url" : "/busbikeproject/cgd/querycheckcgd.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "入库","url" : "/busbikeproject/cgd/disposecgd.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "导入导出","url" : "/busbikeproject/cgd/receivecgd.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "用户管理","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "用户管理","url" : "/busbikeproject/emp/queryuser.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "员工管理","url" : "/busbikeproject/emp/queryemp.action"
+                 },
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "系统配置","url" : "/busbikeproject/emp/setting.action"
+                 }] 
+               },
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "统计分析","url" : "","menus" : [
+                {"icon" : "icon-log","menuid" : "1_1","menuname" : "用户信用","url" : "/busbikeproject/statistics/usedata.action"
+                },
+                {"icon" : "icon-log","menuid" : "1_1","menuname" : "使用分析","url" : "/busbikeproject/statistics/carAnaly.action"
+                },
+                {"icon" : "icon-log","menuid" : "1_1","menuname" : "地图显示","url" : "/busbikeproject/statistics/gis.action"
+                }] 
+               }
+             ]
+}

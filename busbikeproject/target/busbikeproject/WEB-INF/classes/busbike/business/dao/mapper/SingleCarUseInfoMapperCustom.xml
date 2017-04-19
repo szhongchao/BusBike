@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="busbike.business.dao.mapper.SingleCarUseInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="busbike.business.pojo.po.SingleCarUseInfo" >
+    <result column="RENT_NETID" property="rentNetid" jdbcType="VARCHAR" />
+    <result column="RETURN_NETID" property="returnNetid" jdbcType="VARCHAR" />
+    <result column="RENT_DATE_TIME" property="rentDateTime" jdbcType="VARCHAR" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="VARCHAR" />
+    <result column="RETURN_DATE" property="returnDate" jdbcType="VARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="VARCHAR" />
+    <result column="RETURN_TIME" property="returnTime" jdbcType="VARCHAR" />
+    <result column="INST_CARD" property="instCard" jdbcType="VARCHAR" />
+    <result column="CAR_NUM" property="carNum" jdbcType="VARCHAR" />
+    <result column="USE_MIN" property="useMin" jdbcType="DECIMAL" />
+  </resultMap>
+  <!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_single_car_where">
+		
+			<if test="carNum!=null and carNum!=''">
+				and car_Num = #{carNum}
+			</if>
+			<if test="minDateTime!=null and minDateTime!=''">
+				and CONCAT(tran_date, tran_time) &gt; #{minDateTime}
+			</if>
+			<if test="maxDateTime!=null and maxDateTime!=''">
+				and CONCAT(tran_date, tran_time)  &lt;  #{maxDateTime}
+			</if>
+			<if test="minUseMin!=null and minUseMin!=''">
+				and ceil((RETURN_TIME - tran_time)/60) &gt; #{minUseMin}
+			</if>
+			<if test="maxUseMin!=null and maxUseMin!=''">
+				and ceil((RETURN_TIME - tran_time)/60)  &lt;  #{maxUseMin}
+			</if>
+			
+	</sql>
+  		<!-- 用户查询 -->
+	<select id="findSingleCarUseListByCarNum" parameterType="busbike.business.pojo.vo.SingleCarUseQueryVo"
+		resultMap="BaseResultMap">
+		
+		<!--select * from SINGLE_CAR_USE_INFO-->	
+		 select rent_netID,
+	       return_netid,
+	       CONCAT(tran_date, tran_time) as rent_date_time,
+	       tran_date,
+	       RETURN_date,
+	       tran_time,
+	       RETURN_TIME,
+	       inst_card,
+	       car_num ,
+	       ceil((RETURN_TIME - tran_time)/60) as use_min
+	  from xiasha2015 
+	 
+	  <where>
+			<include refid="query_single_car_where" />
+		</where> 
+		
+	</select>
+	 	<select id="findSingleCarUseNumByCarNum" parameterType="busbike.business.pojo.po.SingleCarUseInfoExample"
+		resultType="int">
+		
+		 select count(1) from SINGLE_CAR_USE_INFO
+		
+		</select>
+</mapper>

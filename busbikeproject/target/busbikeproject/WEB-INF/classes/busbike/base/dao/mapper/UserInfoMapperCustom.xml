@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busbike.base.dao.mapper.UserInfoMapperCustom">
+    <resultMap id="BaseResultMap" type="busbike.base.pojo.vo.UserInfoCustom" >
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="ISVISIBLE" property="isvisible" jdbcType="VARCHAR" />
+    <result column="SECURITY_LEVEL" property="securityLevel" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_ID" property="userClassId" jdbcType="VARCHAR" />
+    <result column="USER_CLASS_NAME" property="userClassName" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_ID" property="userGroupId" jdbcType="VARCHAR" />
+    <result column="USER_GROUP_NAME" property="userGroupName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USER_TYPE_ID" property="userTypeId" jdbcType="VARCHAR" />
+  </resultMap>
+	<!-- 用户查询条件 通常情况，为了提高 sql片段可重用性，按单表创建sql片段 -->
+	<sql id="query_user_where">
+		<if test="userInfoCustom!=null">
+			<if test="userInfoCustom.userTypeId!=null and userInfoCustom.userTypeId!=''">
+				and user_type_id = #{userInfoCustom.userTypeId}
+			</if>
+			<if test="userInfoCustom.userName!=null and userInfoCustom.userName!=''">
+				and user_name = #{userInfoCustom.userName}
+			</if>
+			<if test="userInfoCustom.userClassId!=null and userInfoCustom.userClassId!=''">
+				and user_class_id = #{userInfoCustom.userClassId}
+			</if>
+			<if test="userInfoCustom.userGroupId!=null and userInfoCustom.userGroupId!=''">
+				and user_group_id = #{userInfoCustom.userGroupId}
+			</if>
+			
+		</if>
+	</sql>
+
+	<!-- 用户查询 -->
+	<select id="findUserInfoList" parameterType="busbike.base.pojo.vo.UserInfoQueryVo"
+		resultMap="BaseResultMap">
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum page_num
+			from (
+		</if>
+
+		select * from USER_INFO 
+
+
+		<where>
+			<include refid="query_user_where" />
+		</where> 
+		
+		order by to_number(user_id) desc
+		
+		<if test="pageQuery!=null">
+			) page_1
+        <![CDATA[
+         where rownum <= ${pageQuery.PageQuery_end}) page_2
+         where page_2.page_num > ${pageQuery.PageQuery_start}
+ ]]>
+		</if> 
+		
+	</select>
+	
+	<!-- 查询列表的总记录数 -->
+	<select id="findUserInfoCount" parameterType="busbike.base.pojo.vo.UserInfoQueryVo"
+	resultType="int">
+	
+	 select count(*) from USER_INFO 
+
+
+		 <where>
+			<include refid="query_user_where" />
+		</where>
+	
+	</select>
+
+</mapper>
